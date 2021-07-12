@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Zhou.Core;
 
 namespace Core
 {
@@ -23,7 +26,8 @@ namespace Core
 
         static void InitMoudles()
         {
-
+            var container = new WindsorContainer();
+            IocBox.GeInstance().Init<Zhou.IService.IBaseService>(container);            
         }
     }
 }

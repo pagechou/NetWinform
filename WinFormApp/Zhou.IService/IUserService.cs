@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zhou.Service
+namespace Zhou.IService
 {
-    public class BaseService
+    public interface IUserService:IBaseService
     {
-        
+        string GetUserName(string name);
     }
 }

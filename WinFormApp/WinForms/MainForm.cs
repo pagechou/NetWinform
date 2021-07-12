@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Zhou.Core;
+using Zhou.IService;
 
 namespace Core
 {
@@ -15,6 +17,11 @@ namespace Core
         public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(AppService<IUserService>.Proxy.GetUserName(this.Name));
         }
     }
 }

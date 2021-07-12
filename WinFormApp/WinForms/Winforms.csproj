@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.5.1.1\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,6 +84,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zhou.Core\Zhou.Core.csproj">
+      <Project>{c8e1951c-98a8-4d62-bb2c-d41d8f90253f}</Project>
+      <Name>Zhou.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zhou.IService\Zhou.IService.csproj">
+      <Project>{c28d6d2d-de48-4e1d-90d1-1d59d4eb3d7c}</Project>
+      <Name>Zhou.IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zhou.Models\Zhou.Models.csproj">
+      <Project>{802e5eca-229f-45a4-9e66-93ae29e61ec1}</Project>
+      <Name>Zhou.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zhou.Service\Zhou.Service.csproj">
+      <Project>{c42db904-06d6-4b59-b892-1351f418ce34}</Project>
+      <Name>Zhou.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -46,9 +46,20 @@
   <ItemGroup>
     <Compile Include="BaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zhou.Core\Zhou.Core.csproj">
+      <Project>{c8e1951c-98a8-4d62-bb2c-d41d8f90253f}</Project>
+      <Name>Zhou.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zhou.IService\Zhou.IService.csproj">
+      <Project>{c28d6d2d-de48-4e1d-90d1-1d59d4eb3d7c}</Project>
+      <Name>Zhou.IService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

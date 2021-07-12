@@ -8,6 +8,6 @@ namespace Zhou.IService
 {
     public interface IUserService:IBaseService
     {
-        string GetUserName(string name);
+        int GetUserName(string name);
     }
 }

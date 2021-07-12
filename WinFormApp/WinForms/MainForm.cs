@@ -21,7 +21,7 @@ namespace Core
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(AppService<IUserService>.Proxy.GetUserName(this.Name));
+            MessageBox.Show(AppService<IUserService>.Proxy.GetUserName(this.Name).ToString());
         }
     }
 }

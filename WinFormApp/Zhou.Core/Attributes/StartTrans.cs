@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zhou.Service
+namespace Zhou.Core.Attributes
 {
-    public class BaseService
+    /// <summary>
+    /// 开启事务
+    /// </summary>
+    public class StartTrans: Attribute
     {
-        
     }
 }

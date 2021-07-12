@@ -31,11 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
+    <Reference Include="Castle.Core">
+      <HintPath>..\Zhou.DLL\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Windsor, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Windsor.5.1.1\lib\net45\Castle.Windsor.dll</HintPath>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\Zhou.DLL\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="linq2db">
+      <HintPath>..\Zhou.DLL\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -52,11 +55,13 @@
   <ItemGroup>
     <Compile Include="AppService.cs" />
     <Compile Include="AppSetting\Helper.cs" />
-    <Compile Include="IocBox.cs" />
+    <Compile Include="Attributes\NoTrans.cs" />
+    <Compile Include="Attributes\StartTrans.cs" />
+    <Compile Include="BaseService.cs" />
+    <Compile Include="IBase.cs" />
+    <Compile Include="Ioc\CommonInterceptor.cs" />
+    <Compile Include="Ioc\IocBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

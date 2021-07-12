@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zhou.Core;
 
-namespace Zhou.IService
+namespace Zhou.Core.Attributes
 {
-    public interface IBaseService : IBase
+    /// <summary>
+    /// 无需事务
+    /// </summary>
+    public class NoTrans:Attribute
     {
     }
 }

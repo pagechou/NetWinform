@@ -8,6 +8,6 @@ namespace App.IService
 {
     public interface IUserService:IBaseService
     {
-        int GetUserName(string name);
+        string GetUserName(string userId);
     }
 }

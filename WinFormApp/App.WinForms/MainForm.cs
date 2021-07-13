@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using App.Core;
+using App.Core.Service;
 using App.IService;
 
 namespace App.Winforms

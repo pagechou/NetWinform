@@ -19,9 +19,22 @@ namespace App.Core.Ioc
         /// <param name="assembly">程序集对象</param>
 		public static void RegisterAssembly(Assembly assembly)
         {
-            //IocBox.Instance.Box.Register(new IRegistration[] { Classes.FromAssembly(assembly).IncludeNonPublicTypes().BasedOn<ITransientDependency>().If((Type type) => !type.IsGenericTypeDefinition).WithService.Self().WithService.DefaultInterfaces().LifestyleTransient() });
-            //IocBox.Instance.Box.Register(new IRegistration[] { Classes.FromAssembly(assembly).IncludeNonPublicTypes().BasedOn<ISingletonDependency>().If((Type type) => !type.IsGenericTypeDefinition).WithService.Self().WithService.DefaultInterfaces().LifestyleSingleton() });
-            //IocBox.Instance.Box.Register(new IRegistration[] { Classes.FromAssembly(assembly).IncludeNonPublicTypes().BasedOn<IInterceptor>().If((Type type) => !type.IsGenericTypeDefinition).WithService.Self().LifestyleTransient() });
+            IocBox.Instance.Box.Register(new IRegistration[] { Classes.FromAssembly(assembly).IncludeNonPublicTypes().BasedOn<ITransientDependency>().If((Type type) => !type.IsGenericTypeDefinition).WithService.Self().WithService.DefaultInterfaces().LifestyleTransient() });
+            IocBox.Instance.Box.Register(new IRegistration[] { Classes.FromAssembly(assembly).IncludeNonPublicTypes().BasedOn<ISingletonDependency>().If((Type type) => !type.IsGenericTypeDefinition).WithService.Self().WithService.DefaultInterfaces().LifestyleSingleton() });
+            IocBox.Instance.Box.Register(new IRegistration[] { Classes.FromAssembly(assembly).IncludeNonPublicTypes().BasedOn<Castle.DynamicProxy.IInterceptor>().If((Type type) => !type.IsGenericTypeDefinition).WithService.Self().LifestyleTransient() });
         }
+    }
+
+    /// <summary>
+    /// 单例DI base
+    /// </summary>
+    public interface ISingletonDependency
+    {
+    }
+    /// <summary>
+    /// 多实例DI base
+    /// </summary>
+    public interface ITransientDependency
+    {
     }
 }

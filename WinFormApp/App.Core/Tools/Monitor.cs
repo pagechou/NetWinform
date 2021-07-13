@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Core
+namespace App.Core.Tools
 {
-    public interface IBase
+    public class Monitor
     {
+
     }
 }

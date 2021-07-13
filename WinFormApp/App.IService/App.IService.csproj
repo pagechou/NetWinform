@@ -50,7 +50,7 @@
       <Project>{c8e1951c-98a8-4d62-bb2c-d41d8f90253f}</Project>
       <Name>App.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Zhou.Models\App.Models.csproj">
+    <ProjectReference Include="..\App.Models\App.Models.csproj">
       <Project>{802e5eca-229f-45a4-9e66-93ae29e61ec1}</Project>
       <Name>App.Models</Name>
     </ProjectReference>

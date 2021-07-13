@@ -13,11 +13,9 @@ namespace App.Service
 {
     public class UserService : BaseService, IUserService
     {
-        public virtual int GetUserName(string name)
+        public virtual string GetUserName(string id)
         {
-            return DB.GetTable<Tb_Users>().Where(x=>x.UserId==6)
-                .Set(x=>x.Att7,"123")
-                .Update();
+            return DataBase.GetTable<Tb_Users>().FirstOrDefault(x => x.UserId == 6)?.UserName;
         }
     }
 }

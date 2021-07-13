@@ -1,10 +1,14 @@
-﻿using Castle.DynamicProxy;
+﻿using App.Core.Extends;
+using App.Core.Service;
+using App.Core.UseAge;
+using Castle.DynamicProxy;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +26,7 @@ namespace App.Core.Ioc
         private static int count = 0;
         private static IocBox _box = null;
         private static string _appAssembly = "";//容器程序集
-        public IInterceptor Interceptor => new DataBaseInterceptor();
+        public IInterceptor DBInterceptor => new DataBaseInterceptor();
         /// <summary>
         /// 依赖注入容器-属性
         /// </summary>
@@ -52,29 +56,31 @@ namespace App.Core.Ioc
             }
         }
         /// <summary>
-        /// 注册容器
+        /// 应用生存方式
         /// </summary>
-        /// <typeparam name="T">基类类型</typeparam>
-        /// <param name="box">IWindsorContainer容器</param>
-        public void Init<T>(IWindsorContainer box)
+        /// <typeparam name="T"></typeparam>
+        /// <param name="registration">注册组件</param>
+        /// <param name="lifeStyle">生存方式枚举值</param>
+        /// <returns>ComponentRegistration<T></returns>
+		private static ComponentRegistration<T> ApplyLifestyle<T>(ComponentRegistration<T> registration, InstanceLifeStyle lifeStyle)
+        where T : class
         {
-            if (count == 0)
+            ComponentRegistration<T> componentRegistration;
+            if (registration.Implementation.HasParentType(typeof(IServiceBase)))
             {
-                lock (objLock)
-                {
-                    _appAssembly = AppSetting.Helper.GetAppSettingValue("App.Service", "IocAssemblyName");
-                    this.Box = box;
-                    box.Register(
-                    Classes.FromAssemblyNamed(_appAssembly)   //选择Assembly
-                            .IncludeNonPublicTypes()                    //约束Type
-                            .BasedOn<T>()      //约束Type
-                            .WithService.DefaultInterfaces()            //匹配类型
-                            .LifestyleSingleton()//单例
-                    );
-                    count++;
-                }
+                registration = registration.Interceptors<DataBaseInterceptor>();
             }
+            if (lifeStyle == InstanceLifeStyle.Singleton)
+            {
+                componentRegistration = registration.LifestyleSingleton();
+            }
+            else
+            {
+                componentRegistration = (lifeStyle == InstanceLifeStyle.Transient ? registration.LifestyleTransient() : registration);
+            }
+            return componentRegistration;
         }
+
         /// <summary>
         /// 判断类型是否已注册
         /// </summary>
@@ -94,6 +100,109 @@ namespace App.Core.Ioc
         {
             return this.Box.Kernel.HasComponent(type);
         }
+        /// <summary>
+        /// 获取依赖对象
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns>T</returns>
+        public T Resolve<T>() where T : class
+        {
+            var t = default(T);
+            try
+            {
+                t = this.Box.Resolve<T>();
+            }
+            catch
+            {
+                //if (typeof(T) == typeof(IRepository))
+                //{
+                //    IocManager.Instance.Register<IRepository, Linq2dbContextRepository>(InstanceLifeStyle.Transient);
+                //    t = this.Box.Resolve<T>();
+                //}
+            }
+            return t;
+        }
+
+        /// <summary>
+        /// 注册指定程序集中的接口
+        /// </summary>
+        /// <param name="assembly"></param>
+		public void RegisterAssemblyByConvention(Assembly assembly)
+        {
+            BasicRegistrar.RegisterAssembly(assembly);
+        }
+
+        /// <summary>
+		/// 注册一个类型自身实例
+		/// </summary>
+		/// <param name="type">类型</param>
+		/// <param name="lifeStyle">存在形式</param>
+		public void Register(Type type, InstanceLifeStyle lifeStyle = 0)
+        {
+            this.Box.Register(new IRegistration[] { ApplyLifestyle<object>(Component.For(type).OverridesExistingRegistration<object>(), lifeStyle) });
+        }
+
+        public void Register<TType>(InstanceLifeStyle lifeStyle = 0)
+        where TType : class
+        {
+            this.Box.Register(new IRegistration[] { ApplyLifestyle<TType>(Component.For<TType>().OverridesExistingRegistration<TType>(), lifeStyle) });
+        }
+
+        /// <summary>
+        /// 注册多实例Ttype类
+        /// </summary>
+        /// <typeparam name="TType">类型</typeparam>
+        /// <typeparam name="TImpl">接口</typeparam>
+		public void RegisterMultiple<TType, TImpl>()
+        where TType : class
+        where TImpl : class, TType
+        {
+            ComponentRegistration<TType> componentRegistration = Component.For<TType>().ImplementedBy<TImpl>();
+            this.Box.Register(new IRegistration[] { ApplyLifestyle<TType>(componentRegistration, InstanceLifeStyle.Transient) });
+        }
+
+        /// <summary>
+        /// 带实例注册
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="instance">实例</param>
+        /// <param name="lifeStyle">存在形式</param>
+		public void RegisterWithIntance(Type type, object instance, InstanceLifeStyle lifeStyle = 0)
+        {
+            ComponentRegistration<object> componentRegistration = Component.For(type).Instance(instance);
+            this.Box.Register(new IRegistration[] { ApplyLifestyle<object>(componentRegistration.OverridesExistingRegistration<object>(), lifeStyle) });
+        }
+
+
+        /// <summary>
+        /// 注册容器
+        /// </summary>
+        /// <typeparam name="T">基类类型</typeparam>
+        /// <param name="box">IWindsorContainer容器</param>
+        public void Init()
+        {
+            if (count == 0)
+            {
+                lock (objLock)
+                {
+
+                    //初始化Ioc
+
+
+                    //
+                    _appAssembly = AppSetting.Helper.GetAppSettingValue("App.Service", "IocAssemblyName");
+                    this.Box.Register(
+                    Classes.FromAssemblyNamed(_appAssembly)   //选择Assembly
+                            .IncludeNonPublicTypes()                    //约束Type
+                            .BasedOn<IServiceBase>()      //约束Type
+                            .WithService.DefaultInterfaces()            //匹配类型
+                            .LifestyleSingleton()//单例
+                    );
+                    count++;
+                }
+            }
+        }
+
 
 
     }

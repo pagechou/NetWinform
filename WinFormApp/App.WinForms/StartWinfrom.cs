@@ -13,6 +13,7 @@ namespace App.Winforms
     {
         public static void StartUp()
         {
+            //App.Core.TestClass.Cache();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //加载组件
@@ -22,8 +23,7 @@ namespace App.Winforms
 
         static void InitMoudles()
         {
-            var container = new WindsorContainer();
-            IocBox.Instance.Init<App.IService.IBaseService>(container);            
+            IocBox.Instance.Init();            
         }
     }
 }

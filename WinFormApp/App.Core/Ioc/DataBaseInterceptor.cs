@@ -20,7 +20,7 @@ namespace App.Core.Ioc
             try
             {
                 //调用数据库链接
-                var db = (DataConnection)invocation.TargetType.BaseType.InvokeMember("GetDBConnection",
+                var db = (DataConnection)invocation.TargetType.BaseType.InvokeMember("GetDbContext",
                     System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public
                     , null, null, new object[] { null });
                 //特性校验

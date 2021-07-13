@@ -1,5 +1,7 @@
 ﻿using App.Core.Extends;
+using App.Core.Init;
 using App.Core.Service;
+using App.Core.Tools;
 using App.Core.UseAge;
 using Castle.DynamicProxy;
 using Castle.MicroKernel.Registration;
@@ -185,11 +187,16 @@ namespace App.Core.Ioc
             {
                 lock (objLock)
                 {
-
-                    //初始化Ioc
-
-
-                    //
+                    //注册拦截器
+                    this.Box.Register(
+                    Classes.FromThisAssembly()
+                            .IncludeNonPublicTypes()
+                            .BasedOn<IInterceptor>()
+                            .LifestyleTransient()
+                    );
+                    //初始化Ioc                    
+                    this.PackTheIocBox();
+                    //初始化service
                     _appAssembly = AppSetting.Helper.GetAppSettingValue("App.Service", "IocAssemblyName");
                     this.Box.Register(
                     Classes.FromAssemblyNamed(_appAssembly)   //选择Assembly
@@ -203,7 +210,18 @@ namespace App.Core.Ioc
             }
         }
 
-
+        public void PackTheIocBox()
+        {
+            var types = Assembly.GetAssembly(typeof(IInitIoc)).GetTypes()
+                .Where(x => typeof(IInitIoc).IsAssignableFrom(x) && x.IsClass)
+                .Where(x => x != typeof(IInitIoc))
+                .Where(x => x.GetInterfaces().Count() >= 2)
+                .ToList();
+            foreach (Type item in types)
+            {
+                ((IInitIoc)Activator.CreateInstance(item)).InitIocBox();
+            }
+        }
 
     }
 }

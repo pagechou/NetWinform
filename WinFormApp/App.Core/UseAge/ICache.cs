@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Core.Init;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace App.Core.UseAge
     /// <summary>
 	/// 缓存对象
 	/// </summary>
-    public interface ICache
+    public interface ICache: IInitIoc
     {
         /// <summary>
         /// 清空所有的缓存

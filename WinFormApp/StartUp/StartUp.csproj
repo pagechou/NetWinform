@@ -50,5 +50,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.WinForms\App.Winforms.csproj">
+      <Project>{f0abcabc-7d06-411b-b445-439828152d0d}</Project>
+      <Name>App.Winforms</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

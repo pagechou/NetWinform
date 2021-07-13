@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace App.Core.Init
 {
-    internal class InitIoc : IInitIoc
+    public class InitIoc : IInitIoc
     {
         /// <summary>
         /// 将子类实例放入容器
@@ -16,10 +16,10 @@ namespace App.Core.Init
         public void InitIocBox()
         {
             Type type = this.GetType();
-            Type iType = type.GetInterfaces().FirstOrDefault(x=>x.Name!= "IInitIoc");
+            Type iType = type.GetInterfaces().FirstOrDefault(x => x.Name != "IInitIoc");
             if (iType != null)
             {
-                Export.IocBox.Box.Register(iType,type, InstanceLifeStyle.Singleton);
+                Export.IocBox.Box.RegisterWithInstance(iType, this, InstanceLifeStyle.Singleton);
             }
         }
     }

@@ -10,7 +10,7 @@ using System.Web;
 
 namespace App.Core.Caching
 {
-    internal class MemoryCache : InitIoc, ICache
+    internal class MemoryCache : InitIoc,ICache
     {
         public MemoryCache()
         {

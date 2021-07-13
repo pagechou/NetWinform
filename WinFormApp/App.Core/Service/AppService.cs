@@ -34,11 +34,11 @@ namespace App.Core.Service
                 throw new Exception(string.Concat("请配置数据库连接字符串：", connectionStringName));
             }
             //string strAesDecrypt = SimpleCipherHelper.AesDecrypt(item.ConnectionString);
-            if (DB == null)
+            if (DataBase == null)
             {
-                DB = new DataConnection(connectionStringName);
+                DataBase = new DataConnection(connectionStringName);
             }
-            return DB;
+            return DataBase;
         }
         /// <summary>
         /// 清除缓存

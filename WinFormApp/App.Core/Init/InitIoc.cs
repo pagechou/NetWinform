@@ -19,7 +19,7 @@ namespace App.Core.Init
             Type iType = type.GetInterfaces().FirstOrDefault(x=>x.Name!= "IInitIoc");
             if (iType != null)
             {
-                Export.IocBox.Box.Register(type, iType, InstanceLifeStyle.Singleton);
+                Export.IocBox.Box.Register(iType,type, InstanceLifeStyle.Singleton);
             }
         }
     }

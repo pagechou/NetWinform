@@ -13,12 +13,12 @@ namespace App.Winforms
     {
         public static void StartUp()
         {
-            //App.Core.TestClass.Cache();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            //加载组件
-            InitMoudles();
-            Application.Run(new MainForm());
+            App.Core.TestClass.Cache();
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            ////加载组件
+            //InitMoudles();
+            //Application.Run(new MainForm());
         }
 
         static void InitMoudles()

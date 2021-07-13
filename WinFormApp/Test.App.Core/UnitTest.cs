@@ -14,7 +14,7 @@ namespace Test.App.Core
         {
             TestClass.Cache();
             Export.Cache.SetWithMins("name", "Jack");
-            Assert.IsTrue(Export.Cache.Get<string>("name").Equals("Jack"));
+            Assert.IsTrue(Export.Cache.GetItem("name").Equals("Jack"));
         }
     }
 }

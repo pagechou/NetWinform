@@ -72,6 +72,8 @@
     <Compile Include="AppSetting\Helper.cs" />
     <Compile Include="Attributes\NoTrans.cs" />
     <Compile Include="Attributes\StartTrans.cs" />
+    <Compile Include="UseAge\ILog.cs" />
+    <Compile Include="UseAge\IObjectMapper.cs" />
     <Compile Include="UseAge\IServiceBase.cs" />
     <Compile Include="Ioc\BasicRegistrar.cs" />
     <Compile Include="Ioc\DataBaseInterceptor.cs" />

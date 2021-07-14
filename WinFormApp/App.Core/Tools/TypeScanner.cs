@@ -24,19 +24,21 @@ namespace App.Core.Tools
                 .Where(x => x != typeof(T))
                 .ToList();
         }
-        public List<Type> GetTypesOfThisAssembly<T>()
-        {
 
-            return Assembly.GetAssembly(typeof(T)).GetTypes()
+        public List<Type> GetTypesOf<T>(Assembly assembly)
+        {
+            var manyTypes = assembly.GetTypes();
+            return manyTypes
                 .Where(x => typeof(T).IsAssignableFrom(x)
                             && x.IsClass)
                 .Where(x => x != typeof(T))
                 .ToList();
         }
-        public List<Type> GetTypesOf<T>(Assembly assembly)
+
+        public List<Type> GetTypesOfFromTypeAssembly<T>()
         {
-            var manyTypes = assembly.GetTypes();
-            return manyTypes
+
+            return Assembly.GetAssembly(typeof(T)).GetTypes()
                 .Where(x => typeof(T).IsAssignableFrom(x)
                             && x.IsClass)
                 .Where(x => x != typeof(T))
@@ -50,13 +52,6 @@ namespace App.Core.Tools
 
             return AppDomain.CurrentDomain.GetAssemblies()
                 .Where(x => !x.IsDynamic && new Uri(x.CodeBase).AbsolutePath.Contains(path)).ToList();
-        }
-        public static IEnumerable<Type> GetImplTypes(Type type)
-        {
-            var types = Assembly.GetAssembly(type).GetTypes()
-                .Where(x => x.IsClass && x.GetInterfaces().Contains(type) && x.GetInterfaces().Count() >= 2)
-                .ToList();
-            return types;
         }
     }
 }

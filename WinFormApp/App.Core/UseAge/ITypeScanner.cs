@@ -12,7 +12,6 @@ namespace App.Core.UseAge
     {
         List<Type> GetTypesOf<T>();
         List<Type> GetTypesOf<T>(Assembly assembly);
-        List<Type> GetTypesOfThisAssembly<T>();
-
+        List<Type> GetTypesOfFromTypeAssembly<T>();
     }
 }

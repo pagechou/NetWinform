@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace App.IService
 {
-    public interface IUserService:IBaseService
+    public interface IUserService : IBaseService
     {
         string GetUserName(string userId);
+        string GetUserName2(string id);
     }
 }

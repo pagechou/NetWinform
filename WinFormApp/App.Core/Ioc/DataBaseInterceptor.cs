@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using App.Core.Attributes;
+using App.Core.Service;
 
 namespace App.Core.Ioc
 {
@@ -20,33 +21,30 @@ namespace App.Core.Ioc
             try
             {
                 //调用数据库链接
-                var db = (DataConnection)invocation.TargetType.BaseType.InvokeMember("GetDbContext",
-                    System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public
-                    , null, null, new object[] { null });
+                var obj = invocation.Proxy as AppService;
+                var db = obj.GetDbContext();
                 //特性校验
                 bool needTrans = invocation.Method.GetCustomAttributes(typeof(StartTrans), false).Count() >= 1;//开启事务特性
-                using (db)
+                invocation.Proceed();
+                if (needTrans)
                 {
-                    if (needTrans)
+                    try
                     {
-                        try
-                        {
-                            db.BeginTransaction();
-                            //事务
-                            invocation.Proceed();
-                            db.CommitTransaction();
-                        }
-                        catch (Exception ex)
-                        {
-                            db.RollbackTransaction();
-                            throw ex;
-                        }
-                    }
-                    else
-                    {
-                        //不开启事务
+                        db.BeginTransaction();
+                        //事务
                         invocation.Proceed();
+                        db.CommitTransaction();
                     }
+                    catch (Exception ex)
+                    {
+                        db.RollbackTransaction();
+                        throw ex;
+                    }
+                }
+                else
+                {
+                    //不开启事务
+                    invocation.Proceed();
                 }
             }
             catch (Exception ex)

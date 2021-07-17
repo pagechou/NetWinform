@@ -15,7 +15,15 @@ namespace App.Service
     {
         public virtual string GetUserName(string id)
         {
+
             return DataBase.GetTable<Tb_Users>().FirstOrDefault(x => x.UserId == 6)?.UserName;
         }
+
+        public virtual string GetUserName2(string id)
+        {
+            ConnStr = "xxx";
+            return DataBase.GetTable<Tb_Users>().FirstOrDefault(x => x.UserId == 6)?.UserName;
+        }
+
     }
 }

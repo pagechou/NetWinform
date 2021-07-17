@@ -15,7 +15,14 @@ namespace StartUp
             Assembly assembly = Assembly.Load("App.Winforms");
             var type = assembly.GetType("App.Winforms.StartWinfrom");
             MethodInfo method = type.GetMethod("StartUp", BindingFlags.Static | BindingFlags.Public);
-            method.Invoke(type, null);
+            try
+            {
+                method.Invoke(type, null);
+            }
+            catch
+            {
+
+            }
         }
     }
 }

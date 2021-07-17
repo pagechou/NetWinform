@@ -17,26 +17,29 @@ namespace App.Core.Service
 {
     public class AppService : IServiceBase, IDisposable
     {
-        public static DataConnection DataBase { get; private set; }
+        public DataConnection DataBase { get; private set; }
 
         public string ID { get; }
+
+        public string ConnStr { get; set; }
 
         public AppService()
         {
             ID = Guid.NewGuid().ToString("N");
+            ConnStr = "default";
         }
 
-        protected virtual DataConnection GetDbContext(string connectionStringName = "default")
+        public DataConnection GetDbContext()
         {
-            ConnectionStringSettings item = ConfigurationManager.ConnectionStrings[connectionStringName];
+            ConnectionStringSettings item = ConfigurationManager.ConnectionStrings[ConnStr];
             if (item == null || item.ConnectionString.IsNullOrEmpty())
             {
-                throw new Exception(string.Concat("请配置数据库连接字符串：", connectionStringName));
+                throw new Exception(string.Concat("请配置数据库连接字符串：", ConnStr));
             }
             //string strAesDecrypt = SimpleCipherHelper.AesDecrypt(item.ConnectionString);
-            if (DataBase == null)
+            if (DataBase == null || ConnStr != "default")
             {
-                DataBase = new DataConnection(connectionStringName);
+                DataBase = new DataConnection(ConnStr);
             }
             return DataBase;
         }

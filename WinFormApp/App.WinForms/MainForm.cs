@@ -15,6 +15,7 @@ namespace App.Winforms
 {
     public partial class MainForm : Form
     {
+
         public MainForm()
         {
             InitializeComponent();
@@ -23,6 +24,16 @@ namespace App.Winforms
         private void button1_Click(object sender, EventArgs e)
         {
             MessageBox.Show(AppService<IUserService>.Proxy.GetUserName(this.Name).ToString());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(AppService<IUserService>.Proxy.GetUserName2(this.Name).ToString());
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

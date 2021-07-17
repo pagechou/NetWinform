@@ -40,6 +40,9 @@
     <Reference Include="linq2db">
       <HintPath>..\Zhou.DLL\linq2db.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>..\Zhou.DLL\ServiceStack.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -56,6 +59,7 @@
     <Compile Include="AppContext.cs" />
     <Compile Include="Caching\CacheItem.cs" />
     <Compile Include="Export.cs" />
+    <Compile Include="Redis\RedisManage.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="Tools\TypeScanner.cs" />
     <Compile Include="UseAge\ICache.cs" />
